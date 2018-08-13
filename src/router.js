@@ -13,9 +13,13 @@ router.get('/', (req, res, next) => {
 router.post('/pdf', (req, res) => {
   const { docDefinition } = req.body;
   const transformedDoc = traverseTreeAndTransform(docDefinition);
+  const fileName = 'download.pdf';
   
   // Make sure the browser knows this is a PDF.
-  res.set('content-type', 'application/pdf');
+  res.set('Content-Type', 'application/pdf');
+  res.set('Content-Disposition', `attachment; filename=${fileName}`);
+  res.set('Content-Description: File Transfer');
+  res.set('Cache-Control: no-cache');
   // Create the PDF and pipe it to the response object.
   const pdfDoc = printer.createPdfKitDocument(transformedDoc);
   pdfDoc.pipe(res);

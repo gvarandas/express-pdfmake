@@ -1,6 +1,8 @@
 const express = require('express');
 const port = process.env.PORT || '3000';
-var bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const helmet = require('helmet');
 
 // Creating Server
 app = express();
@@ -8,6 +10,8 @@ app = express();
 // Configuring the body parser
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+app.use(cors()); // add CORS headers
+app.use(helmet()); // add security headers
 
 // Routes
 const router = require('./src/router');
